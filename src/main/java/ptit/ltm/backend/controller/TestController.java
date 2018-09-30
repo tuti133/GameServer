@@ -19,25 +19,4 @@ public class TestController {
 		return "hello";
 	}
 	
-	@PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(MultipartHttpServletRequest request) {
-
-        try {
-            Iterator<String> itr = request.getFileNames();
-
-            while (itr.hasNext()) {
-                String uploadedFile = itr.next();
-                MultipartFile file = request.getFile(uploadedFile);
-                String mimeType = file.getContentType();
-                String filename = file.getOriginalFilename();
-                byte[] bytes = file.getBytes();
-            	System.err.println("ok");
-            }
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return new ResponseEntity<>("{}", HttpStatus.OK);
-    }
 }
