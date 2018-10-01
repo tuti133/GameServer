@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -7560674508535794094L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String username;
@@ -28,7 +28,7 @@ public class User implements Serializable {
 
 	private String avatar;
 
-	@Column(name = "name_in_game")
-	private String nameInGame;
+	@Column(name = "ingame_name")
+	private String ingameName;
 	
 }

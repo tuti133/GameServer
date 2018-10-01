@@ -1,12 +1,13 @@
 package ptit.ltm.backend.service;
 
-import ptit.ltm.backend.dto.PostResponseDto;
+import ptit.ltm.backend.dto.ResponseDto;
+import ptit.ltm.backend.dto.request.UserRegisterRequestDto;
 import ptit.ltm.backend.entity.User;
 
 public interface UserService {
 	
-	public PostResponseDto createUser(User user);
+	public ResponseDto createUser(UserRegisterRequestDto requestDto);
 
-	public PostResponseDto updateUser(User user);
+	public ResponseDto updateUser(User user);
 	
 }
