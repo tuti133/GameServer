@@ -29,13 +29,8 @@ public class UserServiceImpl implements UserService{
 			response.setMsg("Tài khoản đã tồn tại!");
 			return response;
 		}
-//		String avaPath = storeService.storeAvatar(requestDto.getAvatar()).toString();
-//		if(avaPath == null) {
-//			response.setErrorCode(Constant.ERROR);
-//			response.setMsg("Ảnh không hợp lệ");
-//		}
 		User user = new User();
-		user.setNickName(requestDto.getIngameName());
+		user.setNickName(requestDto.getNickName());
 		user.setUsername(requestDto.getUsername());
 		user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
 		userRepository.save(user);

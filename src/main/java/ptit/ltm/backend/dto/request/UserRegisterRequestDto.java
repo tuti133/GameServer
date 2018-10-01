@@ -9,5 +9,5 @@ public class UserRegisterRequestDto {
 
 	private String password;
 	
-	private String ingameName;
+	private String nickName;
 }
