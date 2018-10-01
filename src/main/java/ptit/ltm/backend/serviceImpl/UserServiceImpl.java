@@ -1,7 +1,6 @@
 package ptit.ltm.backend.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +8,6 @@ import ptit.ltm.backend.dto.ResponseDto;
 import ptit.ltm.backend.dto.request.UserRegisterRequestDto;
 import ptit.ltm.backend.entity.User;
 import ptit.ltm.backend.repository.UserRepository;
-import ptit.ltm.backend.service.StoreService;
 import ptit.ltm.backend.service.UserService;
 import ptit.ltm.backend.util.Constant;
 
@@ -22,9 +20,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private StoreService storeService;
-	
 	@Override
 	public ResponseDto createUser(UserRegisterRequestDto requestDto) {
 		User u = userRepository.findByUsername(requestDto.getUsername()).orElse(null);
@@ -34,16 +29,15 @@ public class UserServiceImpl implements UserService{
 			response.setMsg("Tài khoản đã tồn tại!");
 			return response;
 		}
-		String avaPath = storeService.storeAvatar(requestDto.getAvatar()).toString();
-		if(avaPath == null) {
-			response.setErrorCode(Constant.ERROR);
-			response.setMsg("Ảnh không hợp lệ");
-		}
+//		String avaPath = storeService.storeAvatar(requestDto.getAvatar()).toString();
+//		if(avaPath == null) {
+//			response.setErrorCode(Constant.ERROR);
+//			response.setMsg("Ảnh không hợp lệ");
+//		}
 		User user = new User();
-		user.setIngameName(requestDto.getIngameName());
+		user.setNickName(requestDto.getIngameName());
 		user.setUsername(requestDto.getUsername());
 		user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-		user.setAvatar(avaPath);
 		userRepository.save(user);
 		response.setErrorCode(Constant.SUCCESS);
 		return response;

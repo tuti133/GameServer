@@ -26,9 +26,7 @@ public class User implements Serializable {
 
 	private String password;
 
-	private String avatar;
-
-	@Column(name = "ingame_name")
-	private String ingameName;
+	@Column(name = "nick_name")
+	private String nickName;
 	
 }
