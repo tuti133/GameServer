@@ -1,11 +1,14 @@
 package ptit.ltm.backend.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ptit.ltm.backend.dto.ResponseDto;
 import ptit.ltm.backend.dto.request.UserRegisterRequestDto;
+import ptit.ltm.backend.dto.response.GetUserOnlineResponseDto;
 import ptit.ltm.backend.entity.User;
 import ptit.ltm.backend.repository.UserRepository;
 import ptit.ltm.backend.service.UserService;
@@ -42,6 +45,14 @@ public class UserServiceImpl implements UserService{
 	public ResponseDto updateUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ResponseDto getOnlineUser(String status) {
+		GetUserOnlineResponseDto response = new GetUserOnlineResponseDto();
+		response.setErrorCode(Constant.SUCCESS);
+		response.setUsers(userRepository.findOnlineUser(status));
+		return response;
 	}
 	
 }

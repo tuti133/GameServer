@@ -1,6 +1,11 @@
 package ptit.ltm.backend.util;
 
-public class Constant {
-	public static final String ERROR = "1";
-	public static final String SUCCESS = "0";
+public interface Constant {
+	String ERROR = "1";
+	String SUCCESS = "0";
+
+	String ONLINE_STATUS = "0";
+	String OFFLINE_STATUS = "1";
+	String AVAILABLE_STATUS = "2";
+	String BUSY_STATUS = "3";
 }

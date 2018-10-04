@@ -1,9 +1,11 @@
 package ptit.ltm.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ptit.ltm.backend.dto.ResponseDto;
 import ptit.ltm.backend.dto.request.UserLoginRequestDto;
@@ -30,4 +32,9 @@ public class UserController {
 		return userService.createUser(requestDto);
 	}
 
+	@GetMapping("/users")
+	public ResponseDto getOnlineUser(@RequestParam("status")String status) {
+		return userService.getOnlineUser(status);
+	}
+	
 }

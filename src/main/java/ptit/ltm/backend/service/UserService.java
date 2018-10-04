@@ -6,8 +6,9 @@ import ptit.ltm.backend.entity.User;
 
 public interface UserService {
 	
-	public ResponseDto createUser(UserRegisterRequestDto requestDto);
+	ResponseDto createUser(UserRegisterRequestDto requestDto);
 
-	public ResponseDto updateUser(User user);
+	ResponseDto updateUser(User user);
 	
+	ResponseDto getOnlineUser(String status);
 }

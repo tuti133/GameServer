@@ -29,4 +29,7 @@ public class User implements Serializable {
 	@Column(name = "nick_name")
 	private String nickName;
 	
+	private String status;
+	
+	private int score;
 }
