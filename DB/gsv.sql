@@ -16,6 +16,58 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `matches`
+--
+
+DROP TABLE IF EXISTS `matches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `matches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `questions`
+--
+
+DROP TABLE IF EXISTS `questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `answer1` varchar(45) NOT NULL,
+  `answer2` varchar(45) DEFAULT NULL,
+  `answer3` varchar(45) DEFAULT NULL,
+  `answer4` varchar(45) DEFAULT NULL,
+  `key` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_matches`
+--
+
+DROP TABLE IF EXISTS `user_matches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_matches` (
+  `match_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time` int(11) DEFAULT NULL,
+  `correct_answers` int(11) DEFAULT NULL,
+  `result` int(11) DEFAULT NULL,
+  `point` int(11) DEFAULT NULL,
+  PRIMARY KEY (`match_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `users`
 --
 
@@ -24,24 +76,14 @@ DROP TABLE IF EXISTS `users`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `nick_name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `nick_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `score` int(11) DEFAULT '0',
-  `status` varchar(1) COLLATE utf8_unicode_ci DEFAULT '1',
+  `status` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'toantm','$2a$10$CFVaMNoXVIjyIeBybc4iTOYSxeLqZFPYa5iFuSyqkxp/7goWKATfO','toan truong',10,'2'),(2,'toantm1','$2a$10$CuZoEiYQw.rcURmGVSuU3OIfmAn2fhJTLfuhjzhk1o5GPJdREbG7C','123456',10,'2'),(3,'toantm2','$2a$10$x3gYv04xJ4QtnNb.XgNU9u321zz3Ur99ySvnagLE9yvlHDcMV.JVG','aaaaaaaaa',10,'3');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -52,4 +94,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-04 22:58:39
+-- Dump completed on 2018-10-08 10:03:06
