@@ -12,31 +12,41 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/gameServer")
-public class ServerSocket {
+import org.springframework.stereotype.Component;
+
+import ptit.ltm.backend.config.CustomSpringConfigurator;
+
+@Component
+@ServerEndpoint(value = "/game", configurator = CustomSpringConfigurator.class)
+public class GameController {
 	static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
 
 	@OnOpen
 	public void handleOpen(Session session) throws IOException {
 		users.add(session);
-		for (Session ss : users) {
-			ss.getBasicRemote().sendText("UPDATE");
-		}
 	}
 
 	@OnMessage
 	public void handleMessage(String message, Session userSession) throws IOException {
-		for (Session session : users) {
-			session.getBasicRemote().sendText("UPDATE");
+		System.err.println(message);
+		String userId = (String) userSession.getUserProperties().get("userId");
+		if (userId == null) {
+			userSession.getUserProperties().put("userId", message);
+			userSession.getBasicRemote().sendText("System: you are connected as " + message);
+		} else {
+			for(Session ss : users) {
+				if(ss.getUserProperties().get("userId").equals(message)) {
+					ss.getBasicRemote().sendText("have match");
+					break;
+				}
+			}
 		}
+		
 	}
-	
+
 	@OnClose
-	public void handleClose(Session session) throws IOException {
+	public void handleClose(Session session) {
 		users.remove(session);
-		for (Session ss : users) {
-			ss.getBasicRemote().sendText("UPDATE");
-		}
 	}
 
 	@OnError
