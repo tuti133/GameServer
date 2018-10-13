@@ -1,7 +1,5 @@
 package ptit.ltm.backend.serviceImpl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ public class UserServiceImpl implements UserService{
 		ResponseDto response = new ResponseDto();
 		if(u != null) {
 			response.setErrorCode(Constant.ERROR);
-			response.setMsg("Tài khoản đã tồn tại!");
+			response.setMsg("Account does not exist!");
 			return response;
 		}
 		User user = new User();

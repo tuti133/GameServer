@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 			+ "WHERE (:status = '0' AND (u.status = '2' OR u.status = '3')) "
 			+ "OR status = :status")
 	List<User> findOnlineUser(@Param("status") String status);
+
 }

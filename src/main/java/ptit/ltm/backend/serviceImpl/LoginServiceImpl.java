@@ -19,19 +19,19 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Override
 	public UserLoginResponseDto login(UserLoginRequestDto userLogin) {
 		UserLoginResponseDto response = new UserLoginResponseDto();
 		User user = userRepository.findByUsername(userLogin.getUsername()).orElse(null);
-		if(user == null) {
+		if (user == null) {
 			response.setErrorCode(Constant.ERROR);
-			response.setMsg("Username không tồn tại!");
+			response.setMsg("Username does not exist!");
 			return response;
 		}
-		if(!passwordEncoder.matches(userLogin.getPassword(), user.getPassword())) {
+		if (!passwordEncoder.matches(userLogin.getPassword(), user.getPassword())) {
 			response.setErrorCode(Constant.ERROR);
-			response.setMsg("Password không đúng!");
+			response.setMsg("Wrong password!");
 			return response;
 		}
 		response.setErrorCode(Constant.SUCCESS);
