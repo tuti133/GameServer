@@ -18,7 +18,7 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	@GetMapping("/questions/random/{number}")
+	@GetMapping("/questions/random={number}")
 	public ResponseDto getRandomQuestion(@PathVariable int number) {
 		return questionService.getRandomQuestions(number);
 	}
