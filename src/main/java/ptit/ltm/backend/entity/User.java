@@ -31,5 +31,5 @@ public class User implements Serializable {
 	
 	private String status;
 	
-	private int score;
+	private double score;
 }

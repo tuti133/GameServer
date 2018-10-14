@@ -62,7 +62,7 @@ CREATE TABLE `user_matches` (
   `time` int(11) DEFAULT NULL,
   `correct_answers` int(11) DEFAULT NULL,
   `result` int(11) DEFAULT NULL,
-  `point` int(11) DEFAULT NULL,
+  `point` double DEFAULT NULL,
   PRIMARY KEY (`match_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -79,7 +79,7 @@ CREATE TABLE `users` (
   `username` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `nick_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `score` int(11) DEFAULT '0',
+  `score` double DEFAULT NULL,
   `status` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -94,4 +94,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-08 10:03:06
+-- Dump completed on 2018-10-14 16:10:03
