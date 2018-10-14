@@ -12,4 +12,8 @@ public interface Constant {
     String SEND_ATTACK_MSG = " You want play with ";
     String ATTACK_REQUEST_MSG = " Play with you? ";
     String ACCEPT_MSG = " Accept this game ";
+    
+    int LOST = 0;
+    int DROW = 1;
+    int WIN = 2;
 }
