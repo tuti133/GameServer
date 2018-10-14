@@ -15,6 +15,8 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Component;
 
 import ptit.ltm.backend.config.CustomSpringConfigurator;
+import ptit.ltm.backend.entity.Match;
+import ptit.ltm.backend.util.Constant;
 
 @Component
 @ServerEndpoint(value = "/game", configurator = CustomSpringConfigurator.class)
@@ -34,14 +36,35 @@ public class GameController {
 			userSession.getUserProperties().put("userId", message);
 			userSession.getBasicRemote().sendText("System: you are connected as " + message);
 		} else {
-			for(Session ss : users) {
-				if(ss.getUserProperties().get("userId").equals(message)) {
-					ss.getBasicRemote().sendText("have match");
+			for (Session ss : users) {
+//				if(ss.getUserProperties().get("userId").equals(message)) {
+				String idUserChallenged = ss.getUserProperties().get("userId").toString();
+				if (message.endsWith(idUserChallenged) && message.contains(Constant.SEND_ATTACK_MSG)) {
+					ss.getBasicRemote().sendText(userId + "/" + Constant.ATTACK_REQUEST_MSG + "/" + idUserChallenged);
+					break;
+				}
+				if (message.contains(Constant.ACCEPT_MSG)) {
+					
+					//component of match : two userId, matchId
+					
+					String[] messageSplit = message.split("/");
+					String idUserAccept = messageSplit[0];
+					String idUserChallenge = messageSplit[2];
+					Match match = new Match();
+					match.setId(10);// set temporary matchId
+					for (Session session : users) {
+						if(session.getUserProperties().get("userId").toString().equals(idUserAccept)) {
+							session.getBasicRemote().sendText("MacthID: "+match.getId() + ", UserId: "+idUserAccept );
+						}
+						if(session.getUserProperties().get("userId").toString().equals(idUserChallenge)) {
+							session.getBasicRemote().sendText("MacthID: "+match.getId() + ", UserId: "+idUserChallenge );
+						}
+					}
 					break;
 				}
 			}
 		}
-		
+
 	}
 
 	@OnClose

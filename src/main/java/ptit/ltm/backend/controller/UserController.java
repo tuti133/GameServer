@@ -21,20 +21,22 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@PostMapping("/login")
 	public ResponseDto login(@ModelAttribute UserLoginRequestDto requestDto) {
+		ResponseDto temp = loginService.login(requestDto);
+		System.err.println(temp);
 		return loginService.login(requestDto);
 	}
-	
+
 	@PostMapping("/register")
-	public ResponseDto register(@ModelAttribute UserRegisterRequestDto requestDto ) {
+	public ResponseDto register(@ModelAttribute UserRegisterRequestDto requestDto) {
 		return userService.createUser(requestDto);
 	}
 
 	@GetMapping("/users")
-	public ResponseDto getOnlineUser(@RequestParam("status")String status) {
+	public ResponseDto getOnlineUser(@RequestParam("status") String status) {
 		return userService.getOnlineUser(status);
 	}
-	
+
 }

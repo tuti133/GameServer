@@ -8,4 +8,8 @@ public interface Constant {
 	String OFFLINE_STATUS = "1";
 	String AVAILABLE_STATUS = "2";
 	String BUSY_STATUS = "3";
+	
+    String SEND_ATTACK_MSG = " You want play with ";
+    String ATTACK_REQUEST_MSG = " Play with you? ";
+    String ACCEPT_MSG = " Accept this game ";
 }
