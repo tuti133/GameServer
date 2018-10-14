@@ -14,6 +14,6 @@ public interface Constant {
     String ACCEPT_MSG = " Accept this game ";
     
     int LOST = 0;
-    int DROW = 1;
+    int DRAW = 1;
     int WIN = 2;
 }
