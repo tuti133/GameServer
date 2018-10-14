@@ -8,4 +8,8 @@ public interface Constant {
 	String OFFLINE_STATUS = "1";
 	String AVAILABLE_STATUS = "2";
 	String BUSY_STATUS = "3";
+	
+	int WIN = 2;
+	int DRAW = 1;
+	int LOST = 0;
 }
