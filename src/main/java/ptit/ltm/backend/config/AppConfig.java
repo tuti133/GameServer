@@ -6,6 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
+import com.google.gson.Gson;
+
 @Configuration
 public class AppConfig {
 	@Bean
@@ -22,4 +24,9 @@ public class AppConfig {
     public CustomSpringConfigurator customSpringConfigurator() {
         return new CustomSpringConfigurator(); // This is just to get context
     }
+	
+	@Bean
+	public Gson gson() {
+		return new Gson();
+	}
 }

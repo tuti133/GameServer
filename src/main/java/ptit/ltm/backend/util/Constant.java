@@ -16,4 +16,9 @@ public interface Constant {
     int LOST = 0;
     int DRAW = 1;
     int WIN = 2;
+    
+    String CHALLENGE_REQUEST = "CHALLENGE_REQUEST";
+    String CHALLENGE_RESPONSE = "CHALLENGE_RESPONSE";
+    String REJECT = "REJECT";
+    String ACCEPT = "ACCEPT";
 }
