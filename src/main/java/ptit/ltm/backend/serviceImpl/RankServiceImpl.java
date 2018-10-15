@@ -29,7 +29,7 @@ public class RankServiceImpl implements RankService {
 			List<Object[]> result = em.createNativeQuery(
 					"SELECT ROW_NUMBER() OVER (ORDER BY SUM(point) DESC, AVG(point) DESC, avg_time ASC) AS row_num, username, nick_name, ROUND(SUM(point), 3) AS score, ROUND(AVG(point), 3) AS avg_score, avg_time "
 							+ "FROM (users LEFT JOIN (SELECT user_matches.user_id, ROUND(AVG(time), 3) as avg_time FROM user_matches WHERE user_matches.result = 2 GROUP BY user_matches.user_id) AS res ON users.id = res.user_id) "
-							+ "JOIN user_matches ON users.id = user_matches.user_id GROUP BY users.id ORDER BY score DESC, avg_score DESC, avg_time ASC")
+							+ "JOIN user_matches ON users.id = user_matches.user_id GROUP BY users.id ORDER BY score DESC, avg_score DESC, avg_time DESC")
 					.getResultList();
 			List<RankDTO> rankList = new ArrayList<>();
 			for (Object[] rank : result) {
