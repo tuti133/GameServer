@@ -34,6 +34,8 @@ public class LoginServiceImpl implements LoginService {
 			response.setMsg("Wrong password!");
 			return response;
 		}
+		user.setStatus(Constant.AVAILABLE_STATUS);
+		userRepository.save(user);
 		response.setErrorCode(Constant.SUCCESS);
 		response.setUser(user);
 		return response;

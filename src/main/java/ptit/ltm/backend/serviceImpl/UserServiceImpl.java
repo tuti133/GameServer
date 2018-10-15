@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService{
 		user.setNickName(requestDto.getNickName());
 		user.setUsername(requestDto.getUsername());
 		user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+		user.setStatus(Constant.OFFLINE_STATUS);
 		userRepository.save(user);
 		response.setErrorCode(Constant.SUCCESS);
 		return response;

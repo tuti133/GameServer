@@ -14,23 +14,37 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.google.gson.Gson;
 
 import ptit.ltm.backend.config.CustomSpringConfigurator;
+import ptit.ltm.backend.entity.Match;
+import ptit.ltm.backend.entity.User;
+import ptit.ltm.backend.entity.UserMatches;
+import ptit.ltm.backend.repository.QuestionRepository;
+import ptit.ltm.backend.repository.UserRepository;
+import ptit.ltm.backend.service.MatchService;
 import ptit.ltm.backend.util.Constant;
 
 @Component
 @ServerEndpoint(value = "/game", configurator = CustomSpringConfigurator.class)
 public class GameController {
 
-	static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
+	private static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
 
-	private final String USER_ID = "USER_ID";
-	private final String NICK_NAME = "NICK_NAME";
+	private static final String USER_ID = "USER_ID";
+	private static final String NICK_NAME = "NICK_NAME";
 
 	@Autowired
 	private Gson gson;
+
+	@Autowired
+	private QuestionRepository questionRepository;
+
+	@Autowired
+	private MatchService matchService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@OnOpen
 	public void handleOpen(Session session) throws IOException {
@@ -48,7 +62,6 @@ public class GameController {
 			String[] x = message.split(",");
 			userSession.getUserProperties().put(USER_ID, x[0]);
 			userSession.getUserProperties().put(NICK_NAME, x[1]);
-			userSession.getBasicRemote().sendText("System: you are connected with id " + x[0]);
 		} else {
 			SocketMessageDto request = gson.fromJson(message, SocketMessageDto.class);
 			// user gửi lời thách đấu lên server chuyển hộ cho user khác
@@ -63,10 +76,20 @@ public class GameController {
 					for (Session ss : users) {
 						if (getIdFromSession(ss) == request.getId()) {
 							SocketMessageDto dto = new SocketMessageDto();
-							dto.setMsg("match");
 							dto.setType(Constant.CHALLENGE_RESPONSE);
+							dto.setMsg(Constant.ACCEPT);
+							dto.setQuestionList(
+									questionRepository.findRandomQuestions(Constant.RANDOM_QUESTION_NUMBER));
+							Match match = matchService.create();
+							dto.setMatchId(match.getId());
 							ss.getBasicRemote().sendText(gson.toJson(dto));
 							userSession.getBasicRemote().sendText(gson.toJson(dto));
+							User user1 = userRepository.findById(getIdFromSession(ss)).get();
+							User user2 = userRepository.findById(getIdFromSession(userSession)).get();
+							user1.setStatus(Constant.BUSY_STATUS);
+							user2.setStatus(Constant.BUSY_STATUS);
+							userRepository.save(user1);
+							userRepository.save(user2);
 							break;
 						}
 					}
@@ -78,6 +101,9 @@ public class GameController {
 	@OnClose
 	public void handleClose(Session session) {
 		users.remove(session);
+		User user = userRepository.findById(getIdFromSession(session)).get();
+		user.setStatus(Constant.OFFLINE_STATUS);
+		userRepository.save(user);
 	}
 
 	@OnError
@@ -98,6 +124,21 @@ public class GameController {
 		}
 	}
 
+	public static void sendResult(UserMatches player) throws IOException {
+		for (Session user : users) {
+			if (getIdFromSession(user) == player.getUserId()) {
+				SocketMessageDto response = new SocketMessageDto();
+				response.setType(Constant.RESULT_RESPONSE);
+				response.setMsg(String.valueOf(player.getResult()));
+				response.setCorrectAnswer(player.getCorrectAnswers());
+				Gson gson = new Gson();
+				user.getBasicRemote().sendText(gson.toJson(response));
+				System.err.println(response.toString());
+				return;
+			}
+		}
+	}
+
 	private void sendRejectMessage(SocketMessageDto request, Session userSession) throws IOException {
 		for (Session user : users) {
 			if (getIdFromSession(user) == request.getId()) {
@@ -112,11 +153,11 @@ public class GameController {
 		}
 	}
 
-	private int getIdFromSession(Session ss) {
+	private static int getIdFromSession(Session ss) {
 		return Integer.parseInt((String) ss.getUserProperties().get(USER_ID));
 	}
 
-	private String getNickNameFromSession(Session ss) {
+	private static String getNickNameFromSession(Session ss) {
 		return (String) ss.getUserProperties().get(NICK_NAME);
 	}
 
