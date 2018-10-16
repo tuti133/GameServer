@@ -24,8 +24,6 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseDto login(@ModelAttribute UserLoginRequestDto requestDto) {
-		ResponseDto temp = loginService.login(requestDto);
-		System.err.println(temp);
 		return loginService.login(requestDto);
 	}
 

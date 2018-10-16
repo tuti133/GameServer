@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
 @Data
+@ToString
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -7560674508535794094L;
@@ -32,4 +34,6 @@ public class User implements Serializable {
 	private String status;
 	
 	private double score;
+	
+	
 }

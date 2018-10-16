@@ -25,5 +25,8 @@ public interface Constant {
     String ACCEPT = "ACCEPT";
     
     int RANDOM_QUESTION_NUMBER = 5;
+    String QUIT = "QUIT";
+    String YOU_WIN = "YOU_WIN";
+    String PLAYER_UNAVAILABLE = "PLAYER_UNAVAILABLE";
     
 }

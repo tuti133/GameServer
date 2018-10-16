@@ -27,6 +27,8 @@ public class SocketMessageDto implements Serializable {
 	
 	private int id;
 	
+	private int idWin;
+	
 	private int matchId;
 	 
     private List<Question> questionList;
