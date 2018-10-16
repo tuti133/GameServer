@@ -14,4 +14,5 @@ import ptit.ltm.backend.dto.ResponseDto;
 public class RankResponseDTO extends ResponseDto {
 
 	private List<RankDTO> rankList;
+
 }

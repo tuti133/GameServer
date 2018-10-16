@@ -1,7 +1,6 @@
 package ptit.ltm.backend.serviceImpl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,27 +26,23 @@ public class RankServiceImpl implements RankService {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Object[]> result = em.createNativeQuery(
-					"SELECT ROW_NUMBER() OVER (ORDER BY SUM(point) DESC, AVG(point) DESC, avg_time ASC) AS row_num, username, nick_name, ROUND(SUM(point), 3) AS score, ROUND(AVG(point), 3) AS avg_score, avg_time "
-							+ "FROM (users LEFT JOIN (SELECT user_matches.user_id, ROUND(AVG(time), 3) as avg_time FROM user_matches WHERE user_matches.result = 2 GROUP BY user_matches.user_id) AS res ON users.id = res.user_id) "
-							+ "JOIN user_matches ON users.id = user_matches.user_id GROUP BY users.id ORDER BY score DESC, avg_score DESC, avg_time DESC")
+					"SELECT username, nick_name, ROUND(SUM(point), 3) AS score, avg_time, users.id FROM (users LEFT JOIN (SELECT user_matches.user_id, ROUND(AVG(time), 3) as avg_time FROM user_matches WHERE user_matches.result = 2 GROUP BY user_matches.user_id) AS res ON users.id = res.user_id) JOIN user_matches ON users.id = user_matches.user_id GROUP BY users.id")
 					.getResultList();
 			List<RankDTO> rankList = new ArrayList<>();
 			for (Object[] rank : result) {
-				BigInteger tmp = (BigInteger) rank[0];
-				Integer pos = tmp.intValue();
-				String username = (String) rank[1];
-				String nickName = (String) rank[2];
-				Double score = (Double) rank[3];
-				Double avgScore = (Double) rank[4];
-
+				String username = (String) rank[0];
+				String nickName = (String) rank[1];
+				Double score = (Double) rank[2];
 				Double avgTime;
 				try {
-					BigDecimal tmp3 = (BigDecimal) rank[5];
-					avgTime = tmp3.doubleValue();
+					BigDecimal tmp = (BigDecimal) rank[3];
+					avgTime = tmp.doubleValue();
 				} catch (Exception e) {
 					avgTime = 0.0;
 				}
-				rankList.add(new RankDTO(pos, username, nickName, score, avgScore, avgTime));
+
+				rankList.add(
+						new RankDTO(username, nickName, score, getAverageOpponentScore((Integer) rank[4]), avgTime));
 			}
 
 			response.setErrorCode(Constant.SUCCESS);
@@ -58,6 +53,12 @@ public class RankServiceImpl implements RankService {
 		}
 
 		return response;
+	}
+
+	private Double getAverageOpponentScore(int userId) {
+		return (Double) em.createNativeQuery(
+				"SELECT AVG(UM2.point) FROM (SELECT DISTINCT user_id, match_id FROM user_matches WHERE user_id = ?1) AS UM1 INNER JOIN user_matches AS UM2 ON UM1.match_id = UM2.match_id JOIN users ON UM1.user_id = users.id WHERE UM1.user_id != UM2.user_id;")
+				.setParameter(1, userId).getSingleResult();
 	}
 
 }
