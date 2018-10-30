@@ -29,4 +29,8 @@ public interface Constant {
     String YOU_WIN = "YOU_WIN";
     String PLAYER_UNAVAILABLE = "PLAYER_UNAVAILABLE";
     
+    String LEAVE_MATCH = "LEAVE_MATCH";
+    
+    
+    
 }

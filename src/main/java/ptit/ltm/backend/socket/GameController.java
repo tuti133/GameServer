@@ -105,6 +105,21 @@ public class GameController {
 				}
 
 			}
+			
+            // user roi tran dau luc game over
+            else if (request.getType().equals(Constant.LEAVE_MATCH)) {
+                for (Session session : users) {
+                    System.err.println(getIdFromSession(session));
+                    if(getIdFromSession(session) == request.getIdStay()) {
+                        System.err.println("Send " + getIdFromSession(session));
+                        SocketMessageDto dto = new SocketMessageDto();
+                        dto.setType(Constant.LEAVE_MATCH);
+                        dto.setMsg(Constant.LEAVE_MATCH);
+                        session.getBasicRemote().sendText(gson.toJson(dto));
+                    }
+                }
+            }
+			
 			// user trả lời lời thách đấu nhận lời hay ko?
 			else if (request.getType().equals(Constant.CHALLENGE_RESPONSE)) {
 				if (request.getMsg().equals(Constant.REJECT)) {
