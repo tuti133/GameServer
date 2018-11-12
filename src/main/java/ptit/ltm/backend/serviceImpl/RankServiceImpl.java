@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Service;
 
-import ptit.ltm.backend.dto.RankDTO;
+import ptit.ltm.backend.dto.RankDto;
 import ptit.ltm.backend.dto.response.RankResponseDTO;
 import ptit.ltm.backend.service.RankService;
 import ptit.ltm.backend.util.Constant;
@@ -28,7 +28,7 @@ public class RankServiceImpl implements RankService {
 			List<Object[]> result = em.createNativeQuery(
 					"SELECT username, nick_name, ROUND(SUM(point), 3) AS score, avg_time, users.id FROM (users LEFT JOIN (SELECT user_matches.user_id, ROUND(AVG(time), 3) as avg_time FROM user_matches WHERE user_matches.result = 2 GROUP BY user_matches.user_id) AS res ON users.id = res.user_id) JOIN user_matches ON users.id = user_matches.user_id GROUP BY users.id")
 					.getResultList();
-			List<RankDTO> rankList = new ArrayList<>();
+			List<RankDto> rankList = new ArrayList<>();
 			for (Object[] rank : result) {
 				String username = (String) rank[0];
 				String nickName = (String) rank[1];
@@ -42,7 +42,7 @@ public class RankServiceImpl implements RankService {
 				}
 
 				rankList.add(
-						new RankDTO(username, nickName, score, getAverageOpponentScore((Integer) rank[4]), avgTime));
+						new RankDto(username, nickName, score, getAverageOpponentScore((Integer) rank[4]), avgTime));
 			}
 
 			response.setErrorCode(Constant.SUCCESS);

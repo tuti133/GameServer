@@ -11,7 +11,7 @@ import ptit.ltm.backend.entity.UserMatches;
 import ptit.ltm.backend.repository.UserMatchRepository;
 import ptit.ltm.backend.repository.UserRepository;
 import ptit.ltm.backend.service.UserMatchService;
-import ptit.ltm.backend.socket.GameController;
+import ptit.ltm.backend.socket.SocketController;
 import ptit.ltm.backend.util.Constant;
 
 @Service
@@ -78,8 +78,8 @@ public class UserMatchServiceImpl implements UserMatchService {
 			user2.setStatus(Constant.AVAILABLE_STATUS);
 			userRepository.save(user1);
 			userRepository.save(user2);
-			GameController.sendResult(player1);
-			GameController.sendResult(player2);
+			SocketController.sendResult(player1);
+			SocketController.sendResult(player2);
 		}
 	}
 

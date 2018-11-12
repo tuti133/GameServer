@@ -3,7 +3,7 @@ package ptit.ltm.backend.dto;
 import lombok.Data;
 
 @Data
-public class RankDTO {
+public class RankDto {
 
 	private String username;
 	private String nickName;
@@ -11,11 +11,11 @@ public class RankDTO {
 	private Double avgScore;
 	private Double avgTime;
 
-	public RankDTO() {
+	public RankDto() {
 
 	}
 
-	public RankDTO(String username, String nickName, Double score, Double avgScore, Double avgTime) {
+	public RankDto(String username, String nickName, Double score, Double avgScore, Double avgTime) {
 		this.username = username;
 		this.nickName = nickName;
 		this.score = score;

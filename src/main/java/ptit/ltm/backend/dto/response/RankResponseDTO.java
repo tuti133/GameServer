@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ptit.ltm.backend.dto.RankDTO;
+import ptit.ltm.backend.dto.RankDto;
 import ptit.ltm.backend.dto.ResponseDto;
 
 @Getter
@@ -13,6 +13,6 @@ import ptit.ltm.backend.dto.ResponseDto;
 @NoArgsConstructor
 public class RankResponseDTO extends ResponseDto {
 
-	private List<RankDTO> rankList;
+	private List<RankDto> rankList;
 
 }

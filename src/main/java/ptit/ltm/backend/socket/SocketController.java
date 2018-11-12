@@ -33,7 +33,7 @@ import ptit.ltm.backend.util.Constant;
 
 @Component
 @ServerEndpoint(value = "/game", configurator = CustomSpringConfigurator.class)
-public class GameController {
+public class SocketController {
 
 	private static Set<Session> users = Collections.synchronizedSet(new HashSet<>());
 
